@@ -2,13 +2,23 @@
 <html>
 <head>
   <title>Bloccit</title>
+  <!-- Instructs browsers on a small, high-pixel density screens to display our pages
+  at a regular, readable size. Without this tag, our pages won't scale properly -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <!-- Container, nav, and nav-tabs are classes provided by Bootstrap. By assigning them
+to <div> and <ul>, you are styling them with default Bootstrap properties and values -->
+  <div class="container">
+    <ul class="nav nav-tabs">
+    <li><%= link_to "Home", welcome_index_path %></li>
+    <li><%= link_to "About", welcome_about_path %></li>
+  </ul>
 
 <%= yield %>
-
+  </div>
 </body>
 </html>
