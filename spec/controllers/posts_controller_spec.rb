@@ -22,6 +22,12 @@ RSpec.describe PostsController, type: :controller do
    end
   end
 
+  describe "offensive post" do
+    it "deletes every 5th post" do
+      
+    end
+  end
+
   # describe "GET #show" do
   #   it "returns http success" do
   #     get :show
