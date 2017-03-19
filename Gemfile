@@ -13,6 +13,7 @@ end
 # we use sqlite3 for our dev environment because it is an easy database for rapid testing
 group :development do
   gem 'sqlite3'
+  gem 'pry-rails'
 end
 
 # Adds rpec to both the development and test groups
