@@ -22,6 +22,52 @@ RSpec.describe PostsController, type: :controller do
    end
   end
 
+#When new is invoked, a new and unsaved Post object is created.
+  describe "GET new" do
+    it "returns http success" do
+      get :new
+      expect(response).to have_http_status(:success)
+  end
+#we expect PostsController#new to render the posts new view
+    it "renders the #new view" do
+      get :new
+      #we use the render_template method to verify the correct template (view) is rendered
+      expect(response).to render_template :new
+    end
+#we expect the @post instance variable to be initialized by PostsController#new
+    it "instantiates @post" do
+      get :new
+      #assigns gives us access to the @post variable assigning it to post
+      expect(assigns(:post)).to_not be_nil
+    end
+  end
+#when create is invoked the newly created object is persisted in the db
+#we expect that after PostsController#create is called, the count of Post instance (ie the rows in the posts table) in the DB will +1
+  describe "POST create" do
+    it "increases the number of Post by 1" do
+      expect{post :create, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}}.to change(Post,:count).by(1)
+    end
+#when create is posted to, we expect the newly created post to be assigned to @post
+    it "assigns the new post to @post" do
+      post :create, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+      expect(assigns(:post)).to eq Post.last
+    end
+
+    it "redirects to the new post" do
+        post :create, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph}
+        expect(response).to redirect_to Post.last
+      end
+  end
+
+
+
+
+
+
+
+
+
+
   # describe "GET #show" do
   #   it "returns http success" do
   #     get :show
