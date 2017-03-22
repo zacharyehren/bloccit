@@ -18,6 +18,19 @@ to <div> and <ul>, you are styling them with default Bootstrap properties and va
     <li><%= link_to "About", about_path %></li>
   </ul>
 
+  <% if flash[:notice] %>
+<!-- alert, alert-*, close & data-dismiss (attribute) are commonly used Boostrap markup for alerts-->
+       <div class="alert alert-success">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <%= flash[:notice] %>
+       </div>
+     <% elsif flash[:alert] %>
+       <div class="alert alert-warning">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <%= flash[:alert] %>
+       </div>
+     <% end %>
+
 <%= yield %>
   </div>
 </body>

@@ -59,22 +59,27 @@ RSpec.describe PostsController, type: :controller do
       end
   end
 
+  describe "GET show" do
+    it "returns http success" do
+      #we pass my_post.id to show as a parameter. These parameters are passed to the params hash
+      get :show, {id: my_post.id}
+      expect(response).to have_http_status(:success)
+    end
+    it "renders the #show view" do
+      #we expect the response to return the show view using the render_template matcher
+      get :show, {id: my_post.id}
+      expect(response).to render_template :show
+    end
+    it "assigns my_post to @post" do
+      get :show, {id: my_post.id}
+      #we expect the post to equal my_post because we call show with the id of my_post
+      expect(assigns(:post)).to eq(my_post)
+    end
+
+  end
 
 
 
-
-
-
-
-
-
-  # describe "GET #show" do
-  #   it "returns http success" do
-  #     get :show
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
-  #
   # describe "GET #new" do
   #   it "returns http success" do
   #     get :new
