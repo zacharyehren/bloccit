@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'random_data'
 
 #RSpec created a test for PostsController. type: controller tells RSpec to treat the test as a controller test
 RSpec.describe PostsController, type: :controller do
