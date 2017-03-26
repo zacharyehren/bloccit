@@ -20,6 +20,7 @@ end
 # We specified version ~> 3.0 to maintain predictable behavior despite new RSpec releases
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
+  gem 'shoulda'
 end
 
 # Use SCSS for stylesheets

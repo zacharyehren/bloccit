@@ -2,6 +2,15 @@ require 'random_data'
 
 #Create Posts
 50.times do
+
+  #Create topics
+  15.times do
+    Topic.create!(
+      name: RandomData.random_sentence,
+      description: RandomData.random_paragraph
+    )
+  end
+  topics = Topic.all
 #we use create! with a bang(!). Adding a ! instructs the method to raise
 #an error if there's a probelem with the data we're seeding. Using create without a bang
 #could fail without warning, causing the error to surface later
@@ -9,6 +18,7 @@ require 'random_data'
   #we use methods from a class that doesn't exist yet (RandomData) that will create
   #random strings for title and body. Writing code for classes and methods that don't exist
   #yet is known as "wishful coding" and can increase productivity because it allows you to stay focused on one problem at a time
+    topic: topics.sample,
     title: RandomData.random_sentence,
     body: RandomData.random_paragraph
   )
@@ -28,5 +38,6 @@ posts = Post.all
 end
 
 puts "Seed finished"
+puts "#{Topic.count} topics created"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"

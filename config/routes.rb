@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   #we call the resources method and pass it a symbol. this instructs Rails to create
+  resources :topics
   #post routes for creating viewing & deleting instances of Post
   resources :posts
 
