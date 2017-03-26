@@ -1,7 +1,6 @@
 require 'random_data'
 
-#Create Posts
-50.times do
+
 
   #Create topics
   15.times do
@@ -11,6 +10,9 @@ require 'random_data'
     )
   end
   topics = Topic.all
+
+  #Create Posts
+  50.times do
 #we use create! with a bang(!). Adding a ! instructs the method to raise
 #an error if there's a probelem with the data we're seeding. Using create without a bang
 #could fail without warning, causing the error to surface later

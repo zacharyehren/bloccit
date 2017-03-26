@@ -8,13 +8,20 @@
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
-            <%= link_to post.title, post %>
+            <!-- We refactor how we link to individual posts using the topic_post_path method. This helper
+            makes a topic and a post and generates a path to the posts show view -->
+            <%= link_to post.title, topic_post_path(@topic, post) %>
           </h4>
+          <small>
+            submitted <%= time_ago_in_words(post.created_at) %> ago <br>
+            <%= post.comments.count %> Comments
+          </small>
         </div>
       </div>
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= link_to "New Post", new_post_path(@topic), class: 'btn btn-success' %>
+    <!-- We replace new_post_path with new_topic_post_path to reflect the nested route we generated in routes.rb -->
+    <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
   </div>
 </div>

@@ -10,7 +10,7 @@
     </ul>
   </div>
   <div class="col-md-8">
-    <%= form_for @post do |f| %>
+    <%= form_for [@topic, @post] do |f| %>
       <div class="form-group">
         <!-- We use f.label to display title this functionality is provided by form_for
       which yiels a form building object that in turn provides f.label which in turn
