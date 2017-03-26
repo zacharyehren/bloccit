@@ -16,7 +16,7 @@ class QuestionController < ApplicationController
     @question.title = params[:question][:title]
     @question.body = params[:question][:body]
 
-    if question.save
+    if @question.save
       flash[:notice] = "Question was saved."
       redirect_to @question
     else
