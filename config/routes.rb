@@ -5,10 +5,7 @@ Rails.application.routes.draw do
 #we pass resources :posts to the resources :topics block. This nests the post routes under the topics routes
   resources :topics do
     resources :posts, except: [:index]
-  end
-
-  resources :topics do
-    resources :sponsored_post, except: [:index]
+    resources :sponsored_posts, except: [:index]
   end
 
 
