@@ -4,6 +4,7 @@ require 'random_data'
 RSpec.describe PostsController, type: :controller do
 #creates a post and assigns it to my_post using let
   let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
+#my_topic.posts - posts refers to the table name which is why it's plural
   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
 
 
