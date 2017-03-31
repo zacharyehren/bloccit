@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   #we register an inline callback directly after the before_save callback
   before_save { self.email = email.downcase if email.present? }
+  before_save :format_name
 
   #we use Ruby's validates function to ensure that name is present and has a max and min length
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
@@ -18,4 +19,14 @@ class User < ActiveRecord::Base
             length: { minimum: 3, maximum: 254 }
   #This function abstracts away much of the complexity of obfuscating user passwords using hashing algorithms which we would otherwise be inclined to write to securely save passwords.
   has_secure_password
+
+  def format_name
+    if name
+      name_array = []
+      name.split.each do |name_part|
+        name_array << name_part.capitalize
+      end
+      self.name = name_array.join(" ")
+    end
+  end
 end
