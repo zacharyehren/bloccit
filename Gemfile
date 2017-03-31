@@ -16,7 +16,7 @@ group :development do
   gem 'pry-rails'
 end
 
-# Adds rpec to both the development and test groups
+# Adds rspec to both the development and test groups
 # We specified version ~> 3.0 to maintain predictable behavior despite new RSpec releases
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
@@ -25,6 +25,8 @@ end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+# Used for encrypting User passwords 
+gem 'bcrypt'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
