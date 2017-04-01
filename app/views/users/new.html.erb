@@ -2,19 +2,19 @@
 
 <div class="row">
   <div class="col-md-8">
-    <%=form_for @user do |f| %>
+    <%= form_for @user, url: { action: :confirm } do |f| %>
     <!-- We check the errors hash on @user. The errors hash is provided by ActiveModel:Errors.
     If there are errors with @user, such as invalid attributes, we display the corresponding error messages -->
     <% if @user.errors.any? %>
-      <div class="alert alert-danger">
-        <h4><%= pluralize(@user.errors.count, "error") %>.</h4>
-        <ul>
-          <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-      <% end %>
+         <div class="alert alert-danger">
+           <h4><%= pluralize(@user.errors.count, "error") %>.</h4>
+           <ul>
+             <% @user.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+             <% end %>
+           </ul>
+         </div>
+       <% end %>
       <!-- we add form fields for name & email, as well as the virtual attributes provided by has_secure_password" -->
       <%= form_group_tag(@user.errors[:name]) do %>
         <%= f.label :name %>
@@ -35,6 +35,6 @@
       <div class="form-group">
         <%= f.submit "Sign up", class: 'btn btn-success' %>
       </div>
-      <% end %>
+    <% end %>
   </div>
 </div>

@@ -17,4 +17,7 @@ Rails.application.routes.draw do
   get 'welcome/faq'
 
   root 'welcome#index'
+
+  #sets the users/confirm path to the users confirm#action in the controller 
+  post 'users/confirm' => 'users#confirm'
 end

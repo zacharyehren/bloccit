@@ -13,9 +13,9 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }, allow_blank: true
   #we validate that email is present, unique, case insensitive, has a min & max length and that it is properly formatted
   validates :email,
-            presence: true,
-            uniqueness: { case_sensitive: false },
-            length: { minimum: 3, maximum: 254 }
+             presence: true,
+             uniqueness: { case_sensitive: false },
+             length: { minimum: 3, maximum: 254 }
   #This function abstracts away much of the complexity of obfuscating user passwords using hashing algorithms which we would otherwise be inclined to write to securely save passwords.
   has_secure_password
 end
