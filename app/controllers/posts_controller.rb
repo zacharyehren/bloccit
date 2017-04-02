@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+#we user a before_action filter to call the require_sign_in method before each of our controller action, except for show
+before_action :require_sign_in, except: :show
 
   def show
     #we find the post that corresponds to the id in the params we passed to show and assign it to @post
@@ -13,12 +15,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
     @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.build(post_params)
 #we assign topic to a post
-    @post.topic = @topic
+    @post.user = current_user
 
     #if we successfully save Post to the database, we display a success message
     if @post.save
@@ -39,8 +39,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
+    @post.assign_attributes(post_params)
 
     if @post.save
       flash[:notice] = "Post was updated"
@@ -63,4 +62,9 @@ class PostsController < ApplicationController
     end
   end
 
+  private
+#this method whitelists the title and body attributes in post to be able to use Mass Assignment 
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
 end

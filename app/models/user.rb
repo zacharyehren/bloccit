@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :posts 
+
   #we register an inline callback directly after the before_save callback
   before_save { self.email = email.downcase if email.present? }
 
