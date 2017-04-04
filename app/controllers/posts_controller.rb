@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
-#we user a before_action filter to call the require_sign_in method before each of our controller action, except for show
+#we use a before_action filter to call the require_sign_in method before each of our controller action, except for show
 before_action :require_sign_in, except: :show
+#we use a second before_action filter to check the role of a signed-in user. if the current_user isn't authorized based on their role, we'll redirect them to the posts show view
+before_action :authorize_user, except: [:show, :new, :create]
 
   def show
     #we find the post that corresponds to the id in the params we passed to show and assign it to @post
@@ -63,8 +65,16 @@ before_action :require_sign_in, except: :show
   end
 
   private
-#this method whitelists the title and body attributes in post to be able to use Mass Assignment 
+#this method whitelists the title and body attributes in post to be able to use Mass Assignment
   def post_params
     params.require(:post).permit(:title, :body)
+  end
+
+  def authorize_user
+    post = Post.find(params[:id])
+    unless current_user == post.user || current_user.admin?
+      flash[:alert] = "You must be an admin to do that"
+      redirect_to [post.topic, post]
+    end
   end
 end

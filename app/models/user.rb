@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
-  has_many :posts 
+  has_many :posts
 
   #we register an inline callback directly after the before_save callback
   before_save { self.email = email.downcase if email.present? }
+# ||= is a Ruby trick. The code below is shorthand for `self.role = :member if self.role.nil?``
+  before_save { self.role ||= :member }
 
   #we use Ruby's validates function to ensure that name is present and has a max and min length
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
@@ -20,4 +22,6 @@ class User < ActiveRecord::Base
              length: { minimum: 3, maximum: 254 }
   #This function abstracts away much of the complexity of obfuscating user passwords using hashing algorithms which we would otherwise be inclined to write to securely save passwords.
   has_secure_password
+
+  enum role: [:member, :admin]
 end
