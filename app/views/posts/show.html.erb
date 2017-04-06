@@ -3,6 +3,17 @@
 <div class="row">
   <div class="col-md-8">
     <p><%= @post.body %></p>
+    <div>
+      <h3>Comments</h3>
+      <!-- This simple line of code will call _comment.html.erb and render all the comments which belong to the given post. -->
+      <%= render @post.comments %>
+    </div>
+    <!-- we all signed in users to see the comment form -->
+    <% if current_user %>
+    <!-- We render the comment form, and use comments/form because we are rendering the comment form from a post view.
+      If we didn't specidy comments, Rails would render the posts form partial by default --> 
+      <%= render 'comments/form', comment: Comment.new, post: @post %>
+    <% end %>
   </div>
   <% if user_is_authorized_for_post?(@post) %>
   <div class="col-md-4">
