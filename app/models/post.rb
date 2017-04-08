@@ -9,7 +9,7 @@ class Post < ActiveRecord::Base
 #this relates the model and allows us to call post.votes. We all add dependent: :destroy to ensure that votes are destroyed when their parent post is deleted
   has_many :votes, dependent: :destroy
 
-  default_scope { order('created_at DESC') }
+  default_scope { order('rank DESC') }
 
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 20 }, presence: true
@@ -26,8 +26,14 @@ class Post < ActiveRecord::Base
     votes.where(value: -1).count
   end
 #we use ActiveRecord's sum method to add the value of all the given post's votes.
-#passing :value to sum tells it what attribute to sum in the collection 
+#passing :value to sum tells it what attribute to sum in the collection
   def points
     votes.sum(:value)
+  end
+
+  def update_rank
+    age_in_days = (created_at - Time.new(1970,1,1)) / 1.day.seconds
+    new_rank = points + age_in_days
+    update_attribute(:rank, new_rank)
   end
 end
