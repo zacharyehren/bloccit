@@ -5,9 +5,10 @@ class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
   has_many :comments, dependent: :destroy
-  has_many :favorites, dependent: :destroy 
+  has_many :favorites, dependent: :destroy
 
   after_create :create_vote
+  after_create :create_favorite
 
 #this relates the model and allows us to call post.votes. We all add dependent: :destroy to ensure that votes are destroyed when their parent post is deleted
   has_many :votes, dependent: :destroy
@@ -44,5 +45,10 @@ class Post < ActiveRecord::Base
 
   def create_vote
     user.votes.create(value: 1, post: self)
+  end
+
+  def create_favorite
+    Favorite.create(post: self, user: self.user)
+    FavoriteMailer.new_post(self).deliver_now
   end
 end
