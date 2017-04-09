@@ -10,8 +10,9 @@ Rails.application.routes.draw do
 #we use `only: []` because we don't want to create any /posts/:id routes, just posts/:post_id/comments
   resources :posts, only: [] do
     resources :comments, only: [:create, :destroy]
+    resources :favorites, only: [:create, :destroy]
     #these two lines create POST routes at the URL 'posts/:id/up-vote' and posts/:id/down-vote.
-    #the as key-value pairs at the end stipulate the method names which will be associated with these routes: up_vote_path & down_vote_path 
+    #the as key-value pairs at the end stipulate the method names which will be associated with these routes: up_vote_path & down_vote_path
     post '/up-vote' => 'votes#up_vote', as: :up_vote
     post '/down-vote' => 'votes#down_vote', as: :down_vote
   end
