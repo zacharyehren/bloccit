@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
   has_many :comments, dependent: :destroy
-  has_many :favorites, dependent: :destroy 
+  has_many :favorites, dependent: :destroy
 
   after_create :create_vote
 
@@ -13,6 +13,8 @@ class Post < ActiveRecord::Base
   has_many :votes, dependent: :destroy
 
   default_scope { order('rank DESC') }
+#we use a lambda (->) to ensure the user is present or signed in. If the user is present, we return all posts. If not, we use the Active Record joins method to retrieve all posts which are public
+  scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
 
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 20 }, presence: true
