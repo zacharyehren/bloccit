@@ -33,3 +33,8 @@
   <%= render @user.comments %>
 
 <h2>Favorited Posts</h2>
+<% @user.favorited_posts.each do |post| %>
+  <h4>
+    <%= link_to post.title, post %>
+  </h4>
+<% end %>
