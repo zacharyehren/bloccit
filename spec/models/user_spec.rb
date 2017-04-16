@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
 #:user is created by the the factory
   let(:user) { create(:user) }
   let(:post) { create(:post) }
+  let(:favorite) { Favorite.create!(post: post, user: user) }
 
   it { is_expected.to have_many(:posts) }
   it { is_expected.to have_many(:comments) }
@@ -123,8 +124,14 @@ RSpec.describe User, type: :model do
      before do
        topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
        @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
-       @comments = 3.times { @post.comments.create!(body: RandomData.random_paragraph) }
+       @comments = @post.comments.create!(body: RandomData.random_paragraph)
      end
+
+     describe "favorited_posts return" do
+       it "returns all the user's favorite posts" do
+       expect(user.favorited_posts).to eq(favorite)
+     end
+    end
 
      describe "favorited post comments" do
        it "lists the post's correct number of comments" do
