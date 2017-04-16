@@ -35,6 +35,9 @@
 <h2>Favorited Posts</h2>
 <% @user.favorited_posts.each do |post| %>
   <h4>
-    <%= link_to post.title, post %>
+    <%= image_tag post.user.avatar_url(48) %>
+    <%= link_to post.title, topic_post_path(post.topic, post) %> |
+    <%= pluralize(post.points, 'vote') %> |
+    <%= pluralize(post.comments.count, 'comment') %>
   </h4>
 <% end %>

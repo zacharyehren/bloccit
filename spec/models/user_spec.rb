@@ -4,6 +4,7 @@ require 'random_data'
 RSpec.describe User, type: :model do
 #:user is created by the the factory
   let(:user) { create(:user) }
+  let(:post) { create(:post) }
 
   it { is_expected.to have_many(:posts) }
   it { is_expected.to have_many(:comments) }
@@ -117,4 +118,18 @@ RSpec.describe User, type: :model do
        expect(known_user.avatar_url(48)).to eq(expected_gravatar)
      end
    end
+
+   describe "favorited_posts" do
+     before do
+       topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
+       @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+       @comments = 3.times { @post.comments.create!(body: RandomData.random_paragraph) }
+     end
+
+     describe "favorited post comments" do
+       it "lists the post's correct number of comments" do
+         expect(post.comments.count).to eq(@comments)
+       end
+     end
+  end
 end
